@@ -1,0 +1,19 @@
+block variables
+doctype html
+html(lang="pt")
+	head
+		meta(charset="utf-8")
+		title= title
+		meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui")
+		link(rel="stylesheet",href="css/reveal.min.css")
+		link(rel="stylesheet",href="css/theme/simple.css")
+		block styles
+	body
+		div.reveal
+			div.slides
+				block content
+		script(src="js/head.min.js")
+		script(src="js/reveal.min.js")
+		script.
+			Reveal.initialize();
+		block scripts
