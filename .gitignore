@@ -2,3 +2,5 @@
 *.html
 # image projects
 *.psd
+# node
+node_modules/*
