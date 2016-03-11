@@ -6,17 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/simple.css">
+    <link rel="stylesheet" href="css/prim.css">
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>Page one</section>
-        <section>Page two</section>
+        <section>
+          <section>
+            <h3>Árvores Geradoras Mínimas</h3>
+            <h4>Definição</h4>
+            <p>
+              Uma Árvore Geradora Mínima pode ser vista como um subgrafo
+              que conecta <strong>todos os vértices</strong> do grafo original
+              e o custo somado de suas arestas seja o <strong>mínimo possível</strong>.
+            </p>
+            <div class="img"><img src="imagens/grafo1.jpg" height="280"><small class="img-sub">[Grafo 1]</small></div>
+            <div class="img"><img src="imagens/arvore1.jpg" height="280"><small class="img-sub">[MST 1]</small></div>
+          </section>
+          <section>
+            <h4>Entendendo a definição</h4>
+            <ul>
+              <li>Todas as arestas devem possuir um custo associado.</li>
+              <li>Uma única aresta conecta dois vértices em ambas direções.</li>
+              <li>O subgrafo deve conter todos os vértices do grafo original.</li>
+              <li>O custo somado das arestas deve ser o menor possível.</li>
+            </ul>
+            <p> </p>
+            <div class="img"><img src="imagens/arvore1.jpg" height="300"><small class="img-sub">[MST]</small></div>
+          </section>
+          <section>
+            <h4>Múltiplas combinações possíveis</h4>
+            <p>
+              Como a principal característica de uma Árvore Geradora Mínima
+              está ligada ao seu custo total, podem existir mais de uma
+              combinação possível de arestas com custo mínimo.
+            </p>
+            <div class="img"><img src="imagens/grafo2.jpg" height="230"><small class="img-sub">[Grafo 2]</small></div>
+            <div class="img"><img src="imagens/arvore2_1.jpg" height="230"><small class="img-sub">[Árvore 1]</small></div>
+            <div class="img"><img src="imagens/arvore2_2.jpg" height="230"><small class="img-sub">[Árvore 2]</small></div>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Algoritmo de Prim</h3>
+            <h4>Definição</h4>
+            <p>
+              O algoritmo de Prim é um algoritmo guloso capaz de determinar
+              um conjunto de arestas de um grafo que formam uma Árvore Geradora Mínima.
+            </p>
+            <div class="img"><img src="imagens/grafo2_prim9.jpg" height="300"><small class="img-sub">[MST 2]</small></div>
+          </section>
+          <section>
+            <h4>Visualização</h4>
+            <ol>
+              <li>Escolha um vértice arbitrário e coloque-o na solução</li>
+              <li>Escolha uma aresta de menor custo fora da solução</li>
+              <li>Se a aresta conecta um novo vértice a solução
+                <ul>
+                  <li>Coloque a aresta escolhida e o novo vértice na solução</li>
+                </ul>
+              </li>
+              <li>Se ainda há vértices conectáveis, volte ao passo 2 </li>
+            </ol>
+            <div style="height: 300px; width: 600px;" class="animaton"><img src="imagens/grafo2.jpg" style="position:absolute;" height="300"><img src="imagens/grafo2_prim1.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim2.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim3.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim4.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim5.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim6.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim7.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim8.jpg" style="position:absolute;" height="300" class="fragment"><img src="imagens/grafo2_prim9.jpg" style="position:absolute;" height="300" class="fragment"></div>
+          </section>
+        </section>
       </div>
     </div>
     <script src="js/head.min.js"></script>
     <script src="js/reveal.min.js"></script>
     <script>Reveal.initialize();</script>
-    <script src="js/speech.js"></script>
   </body>
 </html>
