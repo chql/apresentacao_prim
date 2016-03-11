@@ -1,0 +1,12 @@
+div.img {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+small.img-sub {
+	display: block;
+}
+
+div.animation {
+	margin-left: -20px;
+}
