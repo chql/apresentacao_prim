@@ -6,9 +6,19 @@ end variables
 
 block styles
 	link(rel="stylesheet",href="css/prim.css")
+	link(rel="stylesheet",href="css/vs.css")
 end styles
 
 block content
+	section
+		h3 Algoritmo de Prim
+		h4 Estruturas de Dados II
+		h5 Equipe:
+		ul
+			li Carlos Henrique
+			li Daniele
+			li José Wagner
+			li Rafael Rodrigues
 	section
 		section
 			h3 Árvores Geradoras Mínimas
@@ -79,8 +89,225 @@ block content
 				img(src="imagens/grafo2_prim7.jpg",class="fragment",style="position:absolute;",height="300")
 				img(src="imagens/grafo2_prim8.jpg",class="fragment",style="position:absolute;",height="300")
 				img(src="imagens/grafo2_prim9.jpg",class="fragment",style="position:absolute;",height="300")
+	section
+		section
+			h3 Implementação do grafo
+			h4 Inicialização
+			p.
+				A função #[i grafo_inicializa()] aloca um novo grafo
+				com capacidade para #[i T] vértices.
+			pre
+				code.cpp.
+					/**
+					* Inicializa um novo grafo com capacidade para 'T' vertices
+					*/
+					Grafo grafo_inicializa(int T)
+					{
+						Grafo G = (Grafo)malloc(T*sizeof(Aresta*));
+						int i;
+						for(i = 0; i < T; i++) {
+							// inicialmente nenhum vertice possui aresta
+							// inicializamos todas as listas com 'NULL'
+							G[i] = NULL;
+						}
+						return G;
+					}
+		section
+			h4 Representação em memória
+			div.img
+				img(src="imagens/impl_grafo_0.jpg",height="280")
+				small.img-sub [Grafo representação]
+			div.img
+				img(src="imagens/impl_grafo_1.jpg",height="280")
+				small.img-sub [Grafo em memória]
+			p.
+				Como nenhum vértice possui arestas todas as listas
+				(ponteiros) do vetor inicialmente são #[i NULL].
+		section
+			h4 Adicionando arestas
+			p.
+				A função #[i aresta_insere()] insere uma nova aresta
+				no grafo #[i G], do vértice #[i v] para o vértice
+				#[i d] com custo #[i c].
+			pre
+				code.cpp.
+					/**
+					* Insere uma nova aresta no grafo 'G'
+					* entre os vertices 'v' e 'd' com custo 'c'
+					* Retorna o endereço da nova aresta criada
+					*/
+					Aresta* aresta_insere(Grafo G, int v, int d, int c)
+					{
+						Aresta* n = (Aresta*)malloc(sizeof(Aresta));
+						n->dest = d;
+						n->custo = c;
+						
+						// colocamos a nova aresta no inicio da lista
+						n->prox = G[v];
+						G[v] = n;
+						
+						return n;
+					}
+		section
+			h4 Representação em memória
+			p.
+				Como mostrado abaixo, existe uma aresta entre os vértices 1 e 4 com custo 2.
+			div.img
+				img(src="imagens/impl_grafo_2.jpg",height="280")
+				small.img-sub [Grafo representação]
+			div.img
+				img(src="imagens/impl_grafo_3.jpg",height="280")
+				small.img-sub [Grafo em memória]
+			p.
+				Como o grafo é #[strong não direcionado], um novo elemento
+				é adicionado na lista de ambos os vértices no vetor.
+	section
+		section
+			h3 Implementação do algoritmo
+			h4 Inicialização
+			p.
+				O algoritmo inicia sua execução inicializando
+				os conjuntos de valores que serão utilizados na solução.
+			pre
+				code.cpp.
+					MST algoritmo_prim(Grafo G, int T)
+					{
+						int* C = (int*)malloc(T*sizeof(int));
+						int* P = (int*)malloc(T*sizeof(int));
+						MST  S = grafo_inicializa(T);
+						
+						int i;
+						int u, v;
+						Aresta* a;
+						
+						// inicializacao dos valores
+						for(i = 0; i < T; i++) {
+							S[i] = NULL; // nenhum vertice se ligou a arvore
+							C[i] = INFINITO; // menor custo para os vertices desconhecido
+							P[i] = 0; // nenhum vertice esta na solucao
+						}
+		section
+			h4 Representação após inicialização
+			ul
+				li Todos os valores do vetor #[i S] são #[i NULL], indicando que nenhum vértice se ligou a árvore.
+				li Os valores do vetor #[i C] são infinitos, representando que todos os vértices possuem custo corrente desconhecido.
+				li O vetor #[i P] é zerado, indicando que nenhum vértice está na solução.
+			div.img
+				img(src="imagens/impl_prim_1.jpg",height="280")
+				small.img-sub [Valores inicializados]
+		section
+			h4 Execução do algoritmo
+			p.
+				O algoritmo inicia escolhendo um vértice arbitrário do grafo,
+				e continua expandindo a árvore aresta a aresta, escolhendo
+				sempre os vértices de menor custo corrente.
+			pre
+				code.cpp.
+					C[0] = 0; // escolhe primeiro vertice arbitrariamente
+					while((u = extrair_min(C,P,T)) != -1) {
+						P[u] = 1; // coloca 'u' na solucao
+						for(a = G[u]; a != NULL; a = a->prox) { // para cada adjacente 'v'
+							v = a->dest;
+							// verifica possivel melhor custo para 'v'
+							if(P[v] == 0 && a->custo < C[v]) {
+								if(S[v] == NULL) {
+									aresta_insere(S,v,u,a->custo);
+								} else {
+									S[v]->dest = u;
+									S[v]->custo = a->custo;
+								}
+								C[v] = S[v]->custo; // atualiza custo de 'v'
+							}
+						}
+					}
+		section
+			h4 Representação
+			div
+				div.img
+					img(src="imagens/impl_grafo_4.jpg",height="250")
+			div.animaton(style="height: 300px; width: 400px;")
+				img(src="imagens/impl_prim_2.jpg",style="position:absolute;",height="300")
+				img(src="imagens/impl_prim_3.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/impl_prim_4.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/impl_prim_5.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/impl_prim_6.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/impl_prim_7.jpg",class="fragment",style="position:absolute;",height="300")
+		section
+			h4 Resultado final
+			p.
+				Cada posição do vetor armazena o “pai” de cada vértice
+				e o custo da aresta que liga o vértice a solução.
+			div.img
+				img(src="imagens/grafo2_prim9.jpg",height="280")
+				small.img-sub [MST 2]
+			div.img
+				img(src="imagens/impl_prim_8.jpg",height="280")
+				small.img-sub [MST em memória]
+			p.
+				A Árvore Geradora Mínima representada acima tem custo total 11
+				que é a soma do custo de todas suas arestas.
+	section
+		section
+			h3 Análise de complexidade
+			h4 Inicialização
+			p.
+				Cada vértice do grafo precisa ser inicializado,
+				isso resulta em uma custo inicial de #[i O(|V|)].
+			pre
+				code.cpp.
+					// inicializacao dos valores
+					for(i = 0; i < T; i++) {
+						S[i] = NULL; // nenhum vertice se ligou a arvore
+						C[i] = INFINITO; // menor custo para os vertices desconhecido
+						P[i] = 0; // nenhum vertice esta na solucao
+					}
+		section
+			h4 Execução
+			p.
+				Cada vértice é extraído do fila uma única vez,
+				temos então que o custo de extrair todos os vértices
+				é de #[i O(|V|)]. Esse custo vai ser somado ao da inicialização.
+			pre
+				code.cpp.
+					C[0] = 0; // escolhe primeiro vertice arbitrariamente
+					while((u = extrair_min(C,P,T)) != -1) {
+						P[u] = 1; // coloca 'u' na solucao
+						// ...
+					}
+			p.
+				O custo para extrair um vértice da fila também é #[i O(|V|)],
+				pois é necessário verificar o custo corrente de todos os vértices.
+				Esse custo vai ser multiplicado pela quantidade de vértices extraídos.
+		section
+			h4 Verificação de adjacentes
+			p.
+				O custo de verificar todos os adjacentes de um vértice
+				é linear em relação a quantidade de arestas que o vértices possui,
+				portanto o custo é de #[i O(|V|)].
+			pre
+				code.cpp.
+					for(a = G[u]; a != NULL; a = a->prox) { // para cada adjacente 'v'
+						v = a->dest;
+						// verifica possivel melhor custo para 'v'
+						if(P[v] == 0 && a->custo < C[v]) {
+							if(S[v] == NULL) {
+								aresta_insere(S,v,u,a->custo);
+							} else {
+								S[v]->dest = u;
+								S[v]->custo = a->custo;
+							}
+							C[v] = S[v]->custo; // atualiza custo de 'v'
+						}
+					}
+			p.
+				Temos então que para essa implementação
+				o custo total do algoritmo é de #[strong #[i O(|V|²)]].
+
 end content
 
 block scripts
-
+	script(src="js/highlight.min.js")
+	script.
+		hljs.initHighlightingOnLoad();
+	script(src="js/speech.js")
 end scripts
