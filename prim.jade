@@ -4,9 +4,83 @@ block variables
 	- var title = 'Algoritmo de Prim'
 end variables
 
+block styles
+	link(rel="stylesheet",href="css/prim.css")
+end styles
+
 block content
-	section.
-		Page one
-	section.
-		Page two
+	section
+		section
+			h3 Árvores Geradoras Mínimas
+			h4 Definição
+			p.
+				Uma Árvore Geradora Mínima pode ser vista como um subgrafo
+				que conecta #[strong todos os vértices] do grafo original
+				e o custo somado de suas arestas seja o #[strong mínimo possível].
+			div.img
+				img(src="imagens/grafo1.jpg",height="280")
+				small.img-sub [Grafo 1]
+			div.img
+				img(src="imagens/arvore1.jpg",height="280")
+				small.img-sub [MST 1]
+		section
+			h4 Entendendo a definição
+			ul
+				li Todas as arestas devem possuir um custo associado.
+				li Uma única aresta conecta dois vértices em ambas direções.
+				li O subgrafo deve conter todos os vértices do grafo original.
+				li O custo somado das arestas deve ser o menor possível.
+			p 
+			div.img
+				img(src="imagens/arvore1.jpg",height="300")
+				small.img-sub [MST]
+		section
+			h4 Múltiplas combinações possíveis
+			p.
+				Como a principal característica de uma Árvore Geradora Mínima
+				está ligada ao seu custo total, podem existir mais de uma
+				combinação possível de arestas com custo mínimo.
+			div.img
+				img(src="imagens/grafo2.jpg",height="230")
+				small.img-sub [Grafo 2]
+			div.img
+				img(src="imagens/arvore2_1.jpg",height="230")
+				small.img-sub [Árvore 1]
+			div.img
+				img(src="imagens/arvore2_2.jpg",height="230")
+				small.img-sub [Árvore 2]
+	section
+		section
+			h3 Algoritmo de Prim
+			h4 Definição
+			p.
+				O algoritmo de Prim é um algoritmo guloso capaz de determinar
+				um conjunto de arestas de um grafo que formam uma Árvore Geradora Mínima.
+			div.img
+				img(src="imagens/grafo2_prim9.jpg",height="300")
+				small.img-sub [MST 2]
+		section
+			h4 Visualização
+			ol
+				li Escolha um vértice arbitrário e coloque-o na solução
+				li Escolha uma aresta de menor custo fora da solução
+				li Se a aresta conecta um novo vértice a solução
+					ul
+						li Coloque a aresta escolhida e o novo vértice na solução
+				li Se ainda há vértices conectáveis, volte ao passo 2 
+			div.animaton(style="height: 300px; width: 600px;")
+				img(src="imagens/grafo2.jpg",class="",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim1.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim2.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim3.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim4.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim5.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim6.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim7.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim8.jpg",class="fragment",style="position:absolute;",height="300")
+				img(src="imagens/grafo2_prim9.jpg",class="fragment",style="position:absolute;",height="300")
 end content
+
+block scripts
+
+end scripts
